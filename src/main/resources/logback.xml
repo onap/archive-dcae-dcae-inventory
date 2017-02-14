@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ============LICENSE_START===========
+  dcae-inventory
+  ==================================
+  Copyright (C) 2016 AT&T
+  ==================================
+  This code is licensed under the Apache License, Version 2.0; you may 
+  not use this code for any purpose except in compliance with the Apache
+  License. You may obtain a copy of the License at 
+         http://www.att.com/legal/openecomp.html
+  ============LICENSE_END===========
+  -->
+
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="com" level="INFO"/>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
