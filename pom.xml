@@ -6,7 +6,7 @@
 
     <groupId>org.openecomp.dcae.inventory</groupId>
     <artifactId>dcae-inventory</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <properties>
         <dropwizard.version>0.9.2</dropwizard.version>
