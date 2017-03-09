@@ -18,6 +18,7 @@
 
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
         <docker.registry>nexus3.openecomp.org:10003</docker.registry>
+        <nexusproxy>https://nexus.openecomp.org</nexusproxy>
     </properties>
 
     <pluginRepositories>
