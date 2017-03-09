@@ -268,7 +268,7 @@
                         <configuration>
                             <image>${project.artifactId}</image>
                             <newName>${docker.registry}/openecomp/${project.artifactId}:${docker.version}-${maven.build.timestamp}</newName>
-                            <serverId>${docker.registry}</serverId>
+                            <!--serverId>${docker.registry}</serverId-->
                             <pushImage>false</pushImage>
                         </configuration>
                     </execution>
@@ -281,7 +281,7 @@
                         <configuration>
                             <image>${project.artifactId}</image>
                             <newName>${docker.registry}/openecomp/${project.artifactId}:LATEST</newName>
-                            <serverId>${docker.registry}</serverId>
+                            <!--serverId>${docker.registry}</serverId-->
                             <pushImage>false</pushImage>
                         </configuration>
                     </execution>
