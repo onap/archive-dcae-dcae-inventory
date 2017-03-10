@@ -7,7 +7,7 @@
     <description>This Maven artifact is meant to provide licensing to all modules and submodules using the licensing
         maven plugin.
     </description>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
