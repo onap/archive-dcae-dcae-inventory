@@ -18,7 +18,7 @@
 
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
         <docker.registry>nexus3.openecomp.org:10003</docker.registry>
-        <nexusproxy>https://nexus.openecomp.org</nexusproxy>
+        <nexusproxy>https://nexus.onap.org</nexusproxy>
     </properties>
 
     <pluginRepositories>
@@ -430,12 +430,12 @@
         <repository>
             <id>ecomp-releases</id>
             <name>Open eCOMP Release Repository</name>
-            <url>https://nexus.openecomp.org/content/repositories/releases/</url>
+            <url>https://nexus.onap.org/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>ecomp-snapshots</id>
             <name>Open eCOMP Snapshot Repository</name>
-            <url>https://nexus.openecomp.org/content/repositories/snapshots/</url>
+            <url>https://nexus.onap.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <site>
             <id>dcae-inventory-javadoc</id>
