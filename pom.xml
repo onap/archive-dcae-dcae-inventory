@@ -436,7 +436,7 @@
         </snapshotRepository>
         <site>
             <id>ecomp-site</id>
-            <url>dav:${nexusproxy}/content/sites/site/org/openecomp/dcae/dcae-inventory/${project.artifactId}/${project.version}/</url>
+            <url>dav:${nexusproxy}/content/sites/site/org/onap/dcae/dcae-inventory/${project.artifactId}/${project.version}/</url>
         </site>
     </distributionManagement>
 </project>
