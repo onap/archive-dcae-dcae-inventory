@@ -16,6 +16,9 @@
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
         <docker.registry>nexus3.onap.org:10003</docker.registry>
         <nexusproxy>https://nexus.onap.org</nexusproxy>
+        <snapshots.path>content/repositories/snapshots/</snapshots.path>
+        <releases.path>content/repositories/releases/</releases.path>
+        <site.path>content/sites/site/org/onap/dcae/dcae-inventory/${project.artifactId}/${project.version}/</site.path>
     </properties>
 
     <pluginRepositories>
@@ -427,16 +430,16 @@
         <repository>
             <id>ecomp-releases</id>
             <name>Open eCOMP Release Repository</name>
-	    <url>${nexusproxy}/content/repositories/releases/</url>
+	    <url>${nexusproxy}/${releases.path}</url>
         </repository>
         <snapshotRepository>
             <id>ecomp-snapshots</id>
             <name>Open eCOMP Snapshot Repository</name>
-	    <url>${nexusproxy}/content/repositories/snapshots/</url>
+	    <url>${nexusproxy}/${snapshots.path}</url>
         </snapshotRepository>
         <site>
             <id>ecomp-site</id>
-            <url>dav:${nexusproxy}/content/sites/site/org/onap/dcae/dcae-inventory/${project.artifactId}/${project.version}/</url>
+            <url>dav:${nexusproxy}/${site.path}</url>
         </site>
     </distributionManagement>
 </project>
