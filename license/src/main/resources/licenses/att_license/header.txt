@@ -1,4 +1,0 @@
-This code is licensed under the Apache License, Version 2.0; you may 
-not use this code for any purpose except in compliance with the Apache
-License. You may obtain a copy of the License at 
-       http://www.att.com/legal/openecomp.html

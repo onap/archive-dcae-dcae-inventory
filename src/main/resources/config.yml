@@ -39,16 +39,18 @@ database:
   minIdleTime: 1 minute
 
 dcaeControllerConnection:
-  host:
+  host: dcae-controller-hostname
   port: 9998
   # Apparently this is variable parameter amongst DCAE controller instances
   basePath: resources
-  user:
-  password:
+  user: 
+  password: 
 
 databusControllerConnection:
-  host:
-  port: 8080
+  host: databus-controller-hostname
+  port: 8443
+  mechId:
+  password:
 
 httpClient:
   # The minimum number of threads to use for asynchronous calls.
@@ -64,3 +66,29 @@ httpClient:
   # If true, the client will encode request entities with gzip
   # content encoding. (Requires gzipEnabled to be true).
   gzipEnabledForRequests: false
+
+  # Requests to databus controller were timing out so I bumped it up 4x of default
+  timeout: 5000milliseconds
+  connectionTimeout: 5000milliseconds
+
+server:
+  # requestLog is for those messages you see right when the service handles HTTP requests
+  requestLog:
+    appenders:
+      - type: file
+        currentLogFilename: /opt/logs/DCAE/inventory/audit.log
+        archive: true
+        archivedLogFilenamePattern: /opt/logs/DCAE/inventory/audit-%d.log.gz
+        archivedFileCount: 10
+      - type: console
+
+# Rolling is c.q.l.core.rolling.TimeBasedRollingPolicy
+logging:
+  level: INFO
+  appenders:
+    - type: file
+      currentLogFilename: /opt/logs/DCAE/inventory/audit.log
+      archive: true
+      archivedLogFilenamePattern: /opt/logs/DCAE/inventory/audit-%d.log.gz
+      archivedFileCount: 10
+    - type: console

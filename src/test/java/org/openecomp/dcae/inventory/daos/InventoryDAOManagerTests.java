@@ -18,18 +18,27 @@
  * ============LICENSE_END=========================================================
  */
 
-package io.swagger.api.factories;
+package org.openecomp.dcae.inventory.daos;
 
-import io.swagger.api.DcaeServicesGroupbyApiService;
-import io.swagger.api.impl.DcaeServicesGroupbyApiServiceImpl;
+import org.openecomp.dcae.inventory.InventoryConfiguration;
+import io.dropwizard.setup.Environment;
+import org.junit.Test;
+import static org.mockito.Mockito.mock;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2016-04-18T20:16:22.119Z")
-public class DcaeServicesGroupbyApiServiceFactory {
+/**
+ * Created by mhwang on 3/8/17.
+ */
+public class InventoryDAOManagerTests {
 
-   private final static DcaeServicesGroupbyApiService service = new DcaeServicesGroupbyApiServiceImpl();
+    @Test(expected=InventoryDAOManager.InventoryDAOManagerSetupException.class)
+    public void testInitializeStrictness() {
+        InventoryDAOManager daoManager = InventoryDAOManager.getInstance();
+        Environment environment = mock(Environment.class);
+        InventoryConfiguration configuration = mock(InventoryConfiguration.class);
+        // This should be ok
+        daoManager.setup(environment, configuration);
+        // Cannot do another call
+        daoManager.setup(environment, configuration);
+    }
 
-   public static DcaeServicesGroupbyApiService getDcaeServicesGroupbyApi()
-   {
-      return service;
-   }
 }

@@ -35,5 +35,5 @@ In order for HTTPS to be enabled for DCAE Inventory, an HTTPS `applicationConnec
 The DCAE Inventory has been developed and tested using Java 8.  Here is a sample run command:
 
 ```
-java -jar dcae-inventory-1.0.0.jar server /opt/config.yml
+java -jar dcae-inventory-2.3.1.jar server /opt/config.yml
 ```

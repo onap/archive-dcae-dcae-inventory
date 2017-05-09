@@ -1,27 +1,24 @@
-package org.openecomp.dcae.inventory.dbthings.models;
-
-/*
- * ============LICENSE_START==========================================
- * ===================================================================
- * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
- * ===================================================================
+/*-
+ * ============LICENSE_START=======================================================
+ * dcae-inventory
+ * ================================================================================
+ * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * ============LICENSE_END============================================
- *
- * ECOMP and OpenECOMP are trademarks 
- * and service marks of AT&T Intellectual Property.
- *
+ * ============LICENSE_END=========================================================
  */
+
+package org.openecomp.dcae.inventory.dbthings.models;
 
 import io.swagger.model.DCAEServiceRequest;
 import org.joda.time.DateTime;
@@ -38,7 +35,7 @@ public class DCAEServiceObject {
     }
 
     private String serviceId = null;
-    private String typeName = null;
+    private String typeId = null;
     private DateTime created = null;
     private DateTime modified = null;
     private String vnfId = null;
@@ -57,12 +54,12 @@ public class DCAEServiceObject {
         this.serviceId = serviceId;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getTypeId() {
+        return typeId;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public DateTime getCreated() {
@@ -135,7 +132,7 @@ public class DCAEServiceObject {
     public DCAEServiceObject(String serviceId, DCAEServiceRequest request) {
         DateTime now = DateTime.now(DateTimeZone.UTC);
         this.setServiceId(serviceId);
-        this.setTypeName(request.getTypeName());
+        this.setTypeId(request.getTypeId());
         this.setVnfId(request.getVnfId());
         this.setVnfType(request.getVnfType());
         this.setVnfLocation(request.getVnfLocation());
@@ -158,7 +155,7 @@ public class DCAEServiceObject {
         this.setCreated(source.getCreated());
 
         // Mutable fields
-        this.setTypeName(updateRequest.getTypeName());
+        this.setTypeId(updateRequest.getTypeId());
         this.setVnfId(updateRequest.getVnfId());
         this.setVnfType(updateRequest.getVnfType());
         this.setVnfLocation(updateRequest.getVnfLocation());

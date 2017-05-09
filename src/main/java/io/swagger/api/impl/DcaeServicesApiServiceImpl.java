@@ -1,27 +1,24 @@
-package io.swagger.api.impl;
-
-/*
- * ============LICENSE_START==========================================
- * ===================================================================
- * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
- * ===================================================================
+/*-
+ * ============LICENSE_START=======================================================
+ * dcae-inventory
+ * ================================================================================
+ * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * ============LICENSE_END============================================
- *
- * ECOMP and OpenECOMP are trademarks 
- * and service marks of AT&T Intellectual Property.
- *
+ * ============LICENSE_END=========================================================
  */
+
+package io.swagger.api.impl;
 
 import org.openecomp.dcae.inventory.clients.DCAEControllerClient;
 import org.openecomp.dcae.inventory.clients.DatabusControllerClient;
@@ -66,7 +63,7 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
         DCAEService service = new DCAEService();
         service.setServiceId(serviceObject.getServiceId());
         service.setSelfLink(DcaeServicesApi.buildLinkForGet(uriInfo, "self", serviceObject.getServiceId()));
-        service.setTypeLink(DcaeServiceTypesApi.buildLinkForGet(uriInfo, "type", serviceObject.getTypeName()));
+        service.setTypeLink(DcaeServiceTypesApi.buildLinkForGet(uriInfo, "type", serviceObject.getTypeId()));
         service.setCreated(serviceObject.getCreated().toDate());
         service.setModified(serviceObject.getModified().toDate());
         service.setVnfId(serviceObject.getVnfId());
@@ -89,30 +86,34 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
             // TODO: When putting together the components fail. Should this be a 500 case?
             // For now, this is just logged as a warning.
 
-            if (COMPONENT_SOURCE_DCAE_CONTROLLER.equals(sco.getComponentSource().toUpperCase())) {
-                try {
-                    DCAEControllerClient.ServiceInstance serviceInstance
-                            = this.dcaeControllerClient.getServiceInstance(component.getComponentId());
-                    component.setStatus(serviceInstance.getStatus());
-                    // There's no specific location rather its inferred from the tenant
-                    component.setLocation(this.dcaeControllerClient.getLocation(serviceInstance));
-                    Link componentLink = Link.fromUri(this.dcaeControllerClient.constructResourceURI(sco.getComponentId()))
-                            .rel("component").title(component.getComponentId()).build();
-                    component.setComponentLink(componentLink);
-                } catch (DCAEControllerClientException e) {
-                    LOG.warn(String.format("%s, %s", e.getMessage(), sco.toString()));
-                }
-            } else if (COMPONENT_SOURCE_DATA_BUS_CONTROLLER.equals(sco.getComponentSource().toUpperCase())) {
-                try {
-                    if (this.databusControllerClient.isExists(sco.getComponentId())) {
-                        Link componentLink = Link.fromUri(this.databusControllerClient.constructResourceURI(sco.getComponentId()))
+            if (COMPONENT_SOURCE_DCAE_CONTROLLER.equals(sco.getComponentSource().toUpperCase(Locale.ENGLISH))) {
+                if (this.dcaeControllerClient != null) {
+                    try {
+                        DCAEControllerClient.ServiceInstance serviceInstance
+                                = this.dcaeControllerClient.getServiceInstance(component.getComponentId());
+                        component.setStatus(serviceInstance.getStatus());
+                        // There's no specific location rather its inferred from the AIC tenant
+                        component.setLocation(this.dcaeControllerClient.getLocation(serviceInstance));
+                        Link componentLink = Link.fromUri(this.dcaeControllerClient.constructResourceURI(sco.getComponentId()))
                                 .rel("component").title(component.getComponentId()).build();
                         component.setComponentLink(componentLink);
-                    } else {
-                        LOG.warn(String.format("Feed/topic does not exist: %s", sco.getComponentId()));
+                    } catch (DCAEControllerClientException e) {
+                        LOG.warn(String.format("%s, %s", e.getMessage(), sco.toString()));
                     }
-                } catch (DatabusControllerClientException e) {
-                    LOG.warn(String.format("%s, %s", e.getMessage(), sco.toString()));
+                }
+            } else if (COMPONENT_SOURCE_DATA_BUS_CONTROLLER.equals(sco.getComponentSource().toUpperCase(Locale.ENGLISH))) {
+                if (this.databusControllerClient != null) {
+                    try {
+                        if (this.databusControllerClient.isExists(sco.getComponentId())) {
+                            Link componentLink = Link.fromUri(this.databusControllerClient.constructResourceURI(sco.getComponentId()))
+                                    .rel("component").title(component.getComponentId()).build();
+                            component.setComponentLink(componentLink);
+                        } else {
+                            LOG.warn(String.format("Feed/topic does not exist: %s", sco.getComponentId()));
+                        }
+                    } catch (DatabusControllerClientException e) {
+                        LOG.warn(String.format("%s, %s", e.getMessage(), sco.toString()));
+                    }
                 }
             } else {
                 LOG.warn(String.format("Handling unknown component source: %s", sco.getComponentSource()));
@@ -127,7 +128,7 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
     }
 
     @Override
-    public Response dcaeServicesGet(String typeName, String vnfId, String vnfType, String vnfLocation,
+    public Response dcaeServicesGet(String typeId, String vnfId, String vnfType, String vnfLocation,
                                     String componentType, Boolean shareable, DateTime created, Integer offset,
                                     UriInfo uriInfo, SecurityContext securityContext) {
         List<DCAEServiceObject> serviceObjects = new ArrayList<>();
@@ -147,8 +148,8 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
 
             List<String> whereClauses = new ArrayList<String>();
 
-            if (typeName != null) {
-                whereClauses.add("ds.type_name = :typeName");
+            if (typeId != null) {
+                whereClauses.add("ds.type_id = :typeId");
             }
 
             if (vnfId != null) {
@@ -156,7 +157,7 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
             }
 
             if (vnfType != null) {
-                whereClauses.add("ds.vnf_type = :vnfType");
+                whereClauses.add("lower(ds.vnf_type) = lower(:vnfType)");
             }
 
             if (vnfLocation != null) {
@@ -184,8 +185,8 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
 
             Query<DCAEServiceObject> query = jdbiHandle.createQuery(sb.toString()).map(new DCAEServiceObjectMapper());
 
-            if (typeName != null) {
-                query.bind("typeName", typeName);
+            if (typeId != null) {
+                query.bind("typeId", typeId);
             }
 
             if (vnfId != null) {
@@ -240,14 +241,14 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
         Integer offsetPrev = offset - PAGINATION_PAGE_SIZE;
 
         if (offsetPrev >= 0) {
-            navigationLinks.setPreviousLink(DcaeServicesApi.buildLinkForGet(uriInfo, "prev", typeName, vnfId, vnfType,
+            navigationLinks.setPreviousLink(DcaeServicesApi.buildLinkForGet(uriInfo, "prev", typeId, vnfId, vnfType,
                     vnfLocation, componentType, shareable, created, offsetPrev));
         }
 
         Integer offsetNext = offset + PAGINATION_PAGE_SIZE;
 
         if (offsetNext < serviceObjects.size()) {
-            navigationLinks.setNextLink(DcaeServicesApi.buildLinkForGet(uriInfo, "next", typeName, vnfId, vnfType,
+            navigationLinks.setNextLink(DcaeServicesApi.buildLinkForGet(uriInfo, "next", typeId, vnfId, vnfType,
                     vnfLocation, componentType, shareable, created, offsetNext));
         }
 
@@ -278,8 +279,8 @@ public class DcaeServicesApiServiceImpl extends DcaeServicesApiService {
     public Response dcaeServicesServiceIdPut(String serviceId, DCAEServiceRequest request, UriInfo uriInfo,
                                              SecurityContext securityContext) {
         // Check to make sure that the DCAE service type exists
-        if (InventoryDAOManager.getInstance().getDCAEServiceTypesDAO().getByTypeName(request.getTypeName()) == null) {
-            String errorMessage = String.format("DCAE service type does not exist: %s", request.getTypeName());
+        if (InventoryDAOManager.getInstance().getDCAEServiceTypesDAO().getByTypeIdActiveOnly(request.getTypeId()) == null) {
+            String errorMessage = String.format("DCAE service type does not exist: %s", request.getTypeId());
             ApiResponseMessage message = new ApiResponseMessage(ApiResponseMessage.ERROR, errorMessage);
             return Response.status(422).entity(message).build();
         }

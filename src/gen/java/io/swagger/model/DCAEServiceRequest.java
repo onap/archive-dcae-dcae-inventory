@@ -1,27 +1,24 @@
-package io.swagger.model;
-
-/*
- * ============LICENSE_START==========================================
- * ===================================================================
- * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
- * ===================================================================
+/*-
+ * ============LICENSE_START=======================================================
+ * dcae-inventory
+ * ================================================================================
+ * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * ============LICENSE_END============================================
- *
- * ECOMP and OpenECOMP are trademarks 
- * and service marks of AT&T Intellectual Property.
- *
+ * ============LICENSE_END=========================================================
  */
+
+package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,7 +37,7 @@ import java.util.List;
 public class DCAEServiceRequest   {
 
   @NotEmpty
-  private String typeName = null;
+  private String typeId = null;
   @NotEmpty
   private String vnfId = null;
   @NotEmpty
@@ -54,19 +51,19 @@ public class DCAEServiceRequest   {
 
   /**
    **/
-  public DCAEServiceRequest typeName(String typeName) {
-    this.typeName = typeName;
+  public DCAEServiceRequest typeId(String typeId) {
+    this.typeId = typeId;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "Name of the associated DCAE service type")
-  @JsonProperty("typeName")
-  public String getTypeName() {
-    return typeName;
+  @ApiModelProperty(required = true, value = "Id of the associated DCAE service type")
+  @JsonProperty("typeId")
+  public String getTypeId() {
+    return typeId;
   }
-  public void setTypeName(String typeName) {
-    this.typeName = typeName;
+  public void setTypeId(String typeId) {
+    this.typeId = typeId;
   }
 
   /**
@@ -165,7 +162,7 @@ public class DCAEServiceRequest   {
       return false;
     }
     DCAEServiceRequest dCAEServiceRequest = (DCAEServiceRequest) o;
-    return Objects.equals(typeName, dCAEServiceRequest.typeName) &&
+    return Objects.equals(typeId, dCAEServiceRequest.typeId) &&
         Objects.equals(vnfId, dCAEServiceRequest.vnfId) &&
         Objects.equals(vnfType, dCAEServiceRequest.vnfType) &&
         Objects.equals(vnfLocation, dCAEServiceRequest.vnfLocation) &&
@@ -175,7 +172,7 @@ public class DCAEServiceRequest   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(typeName, vnfId, vnfType, vnfLocation, deploymentRef, components);
+    return Objects.hash(typeId, vnfId, vnfType, vnfLocation, deploymentRef, components);
   }
 
   @Override
@@ -183,7 +180,7 @@ public class DCAEServiceRequest   {
     StringBuilder sb = new StringBuilder();
     sb.append("class DCAEServiceRequest {\n");
     
-    sb.append("    typeName: ").append(toIndentedString(typeName)).append("\n");
+    sb.append("    typeId: ").append(toIndentedString(typeId)).append("\n");
     sb.append("    vnfId: ").append(toIndentedString(vnfId)).append("\n");
     sb.append("    vnfType: ").append(toIndentedString(vnfType)).append("\n");
     sb.append("    vnfLocation: ").append(toIndentedString(vnfLocation)).append("\n");

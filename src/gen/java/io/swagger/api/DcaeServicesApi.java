@@ -1,27 +1,24 @@
-package io.swagger.api;
-
-/*
- * ============LICENSE_START==========================================
- * ===================================================================
- * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
- * ===================================================================
+/*-
+ * ============LICENSE_START=======================================================
+ * dcae-inventory
+ * ================================================================================
+ * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * ============LICENSE_END============================================
- *
- * ECOMP and OpenECOMP are trademarks 
- * and service marks of AT&T Intellectual Property.
- *
+ * ============LICENSE_END=========================================================
  */
+
+package io.swagger.api;
 
 import io.dropwizard.jersey.params.DateTimeParam;
 import io.swagger.api.factories.DcaeServicesApiServiceFactory;
@@ -48,8 +45,8 @@ public class DcaeServicesApi {
     @Context
     UriInfo uriInfo;
 
-    public static Link buildLinkForGetByTypeName(UriInfo uriInfo, String rel, String typeName) {
-        return buildLinkForGet(uriInfo, rel, typeName, null, null, null, null, null, null, null);
+    public static Link buildLinkForGetByTypeId(UriInfo uriInfo, String rel, String typeId) {
+        return buildLinkForGet(uriInfo, rel, typeId, null, null, null, null, null, null, null);
     }
 
     public static Link buildLinkForGetByVnfType(UriInfo uriInfo, String rel, String vnfType) {
@@ -60,14 +57,14 @@ public class DcaeServicesApi {
         return buildLinkForGet(uriInfo, rel, null, null, null, vnfLocation, null, null, null, null);
     }
 
-    public static Link buildLinkForGet(UriInfo uriInfo, String rel, String typeName, String vnfId, String vnfType,
+    public static Link buildLinkForGet(UriInfo uriInfo, String rel, String typeId, String vnfId, String vnfType,
                                        String vnfLocation, String componentType, Boolean shareable, DateTime created,
                                        Integer offset) {
         UriBuilder ub = uriInfo.getBaseUriBuilder().path(DcaeServicesApi.class)
                 .path(DcaeServicesApi.class, "dcaeServicesGet");
 
-        if (typeName != null) {
-            ub.queryParam("typeName", typeName);
+        if (typeId != null) {
+            ub.queryParam("typeId", typeId);
         }
         if (vnfId != null) {
             ub.queryParam("vnfId", vnfId);
@@ -106,9 +103,10 @@ public class DcaeServicesApi {
             @io.swagger.annotations.ApiResponse(code = 502, message = "Bad response from DCAE controller", response = ApiResponseMessage.class),
             @io.swagger.annotations.ApiResponse(code = 504, message = "Failed to connect with DCAE controller", response = ApiResponseMessage.class)})
     public Response dcaeServicesGet(
-            @ApiParam(value = "DCAE service type name") @QueryParam("typeName") String typeName,
+            @ApiParam(value = "DCAE service type name") @QueryParam("typeId") String typeId,
             @ApiParam(value = "") @QueryParam("vnfId") String vnfId,
-            @ApiParam(value = "") @QueryParam("vnfType") String vnfType,
+            @ApiParam(value = "Filter by associated vnf type. This field is treated case insensitive.")
+                @QueryParam("vnfType") String vnfType,
             @ApiParam(value = "") @QueryParam("vnfLocation") String vnfLocation,
             @ApiParam(value = "Use to filter by a specific DCAE service component type") @QueryParam("componentType") String componentType,
             @ApiParam(value = "Use to filter by DCAE services that have shareable components or not") @QueryParam("shareable") Boolean shareable,
@@ -116,7 +114,7 @@ public class DcaeServicesApi {
             @ApiParam(value = "Query resultset offset used for pagination (zero-based)") @QueryParam("offset") Integer offset,
             @Context SecurityContext securityContext)
             throws NotFoundException {
-        return delegate.dcaeServicesGet(typeName, vnfId, vnfType, vnfLocation, componentType, shareable,
+        return delegate.dcaeServicesGet(typeId, vnfId, vnfType, vnfLocation, componentType, shareable,
                 (created == null ? null : created.get()), offset, uriInfo, securityContext);
     }
 

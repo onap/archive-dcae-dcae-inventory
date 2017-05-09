@@ -1,27 +1,24 @@
-package org.openecomp.dcae.inventory.dbthings.models;
-
-/*
- * ============LICENSE_START==========================================
- * ===================================================================
- * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
- * ===================================================================
+/*-
+ * ============LICENSE_START=======================================================
+ * dcae-inventory
+ * ================================================================================
+ * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * ============LICENSE_END============================================
- *
- * ECOMP and OpenECOMP are trademarks 
- * and service marks of AT&T Intellectual Property.
- *
+ * ============LICENSE_END=========================================================
  */
+
+package org.openecomp.dcae.inventory.dbthings.models;
 
 import org.joda.time.DateTime;
 
@@ -34,13 +31,26 @@ import java.util.List;
  */
 public class DCAEServiceTypeObject {
 
+    private String typeId = null;
     private String typeName = null;
+    private Integer typeVersion = null;
+    private String blueprintTemplate = null;
     private String owner = null;
     private List<String> vnfTypes = null;
     private List<String> serviceIds = null;
     private List<String> serviceLocations = null;
-    private String blueprintTemplate = null;
+    private String asdcServiceId = null;
+    private String asdcResourceId = null;
     private DateTime created = null;
+    private DateTime deactivated = null;
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
 
     public String getTypeName() {
         return typeName;
@@ -48,6 +58,22 @@ public class DCAEServiceTypeObject {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public Integer getTypeVersion() {
+        return typeVersion;
+    }
+
+    public void setTypeVersion(Integer typeVersion) {
+        this.typeVersion = typeVersion;
+    }
+
+    public String getBlueprintTemplate() {
+        return blueprintTemplate;
+    }
+
+    public void setBlueprintTemplate(String blueprintTemplate) {
+        this.blueprintTemplate = blueprintTemplate;
     }
 
     public String getOwner() {
@@ -82,12 +108,20 @@ public class DCAEServiceTypeObject {
         this.serviceLocations = serviceLocations;
     }
 
-    public String getBlueprintTemplate() {
-        return blueprintTemplate;
+    public String getAsdcServiceId() {
+        return asdcServiceId;
     }
 
-    public void setBlueprintTemplate(String blueprintTemplate) {
-        this.blueprintTemplate = blueprintTemplate;
+    public void setAsdcServiceId(String asdcServiceId) {
+        this.asdcServiceId = asdcServiceId;
+    }
+
+    public String getAsdcResourceId() {
+        return asdcResourceId;
+    }
+
+    public void setAsdcResourceId(String asdcResourceId) {
+        this.asdcResourceId = asdcResourceId;
     }
 
     public DateTime getCreated() {
@@ -98,4 +132,11 @@ public class DCAEServiceTypeObject {
         this.created = created;
     }
 
+    public DateTime getDeactivated() {
+        return deactivated;
+    }
+
+    public void setDeactivated(DateTime deactivated) {
+        this.deactivated = deactivated;
+    }
 }

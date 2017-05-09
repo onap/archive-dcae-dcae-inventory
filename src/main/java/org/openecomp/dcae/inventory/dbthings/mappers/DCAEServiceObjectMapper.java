@@ -1,27 +1,24 @@
-package org.openecomp.dcae.inventory.dbthings.mappers;
-
-/*
- * ============LICENSE_START==========================================
- * ===================================================================
- * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
- * ===================================================================
+/*-
+ * ============LICENSE_START=======================================================
+ * dcae-inventory
+ * ================================================================================
+ * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
+ * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * ============LICENSE_END============================================
- *
- * ECOMP and OpenECOMP are trademarks 
- * and service marks of AT&T Intellectual Property.
- *
+ * ============LICENSE_END=========================================================
  */
+
+package org.openecomp.dcae.inventory.dbthings.mappers;
 
 import org.openecomp.dcae.inventory.dbthings.models.DCAEServiceObject;
 import org.joda.time.DateTime;
@@ -40,7 +37,7 @@ public class DCAEServiceObjectMapper implements ResultSetMapper<DCAEServiceObjec
     public DCAEServiceObject map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
         DCAEServiceObject object = new DCAEServiceObject();
         object.setServiceId(resultSet.getString("service_id"));
-        object.setTypeName(resultSet.getString("type_name"));
+        object.setTypeId(resultSet.getString("type_id"));
         object.setVnfId(resultSet.getString("vnf_id"));
         object.setVnfType(resultSet.getString("vnf_type"));
         object.setVnfLocation(resultSet.getString("vnf_location"));

@@ -14,16 +14,20 @@ As of version 0.12.0.
               Table "public.dcae_service_types"
        Column       |            Type             | Modifiers 
 --------------------+-----------------------------+-----------
+ type_id            | character varying           | not null
+ type_version       | integer                     | not null
  type_name          | character varying           | not null
  owner              | character varying           | not null
+ blueprint_template | text                        | not null
  vnf_types          | character varying[]         | not null
  service_ids        | character varying[]         | 
  service_locations  | character varying[]         | 
- blueprint_template | text                        | not null
+ asdc_service_id    | character varying           | not null
+ asdc_resource_id   | character varying           | not null
  created            | timestamp without time zone | not null
  is_active          | boolean                     | not null
 Indexes:
-    "pk_type_created" PRIMARY KEY, btree (type_name, created)
+    "pk_type_created" PRIMARY KEY, btree (type_id, created)
 ```
 
 ## `dcae_services`
@@ -40,7 +44,7 @@ Indexes:
      Column     |            Type             | Modifiers 
 ----------------+-----------------------------+-----------
  service_id     | character varying           | not null
- type_name      | character varying           | not null
+ type_id        | character varying           | not null
  vnf_id         | character varying           | not null
  vnf_type       | character varying           | not null
  vnf_location   | character varying           | not null
